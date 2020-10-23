@@ -1,0 +1,10 @@
+---
+- name: update k8sboss
+  hosts: k8sboss
+  tasks:
+    - name: Update Cache and upgrade
+      apt:
+          update_cache: yes
+          upgrade: dist
+      become: yes
+

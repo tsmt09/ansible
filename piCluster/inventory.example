@@ -1,0 +1,7 @@
+[k8sboss]
+192.168.21.55 ansible_user=pi
+
+[k8sworkers]
+192.168.21.11 ansible_user=pi
+192.168.21.12 ansible_user=pi
+192.168.21.13 ansible_user=pi

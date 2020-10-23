@@ -1,0 +1,2 @@
+[homepi]
+192.168.21.4 ansible_user=pi

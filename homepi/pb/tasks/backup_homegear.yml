@@ -1,0 +1,9 @@
+---
+- name: Archive homegear and copy to /tmp
+  command: tar -zcpf /tmp/{{ dateTimeForFiles }}_homegear.tar.gz --exclude="*.so" /etc/homegear /var/lib/homegear
+- name: Fetch backup file from remote
+  fetch:
+      src: /tmp/{{ dateTimeForFiles }}_homegear.tar.gz
+      dest: "{{ backupPath }}"
+- name: delete backup file from remote
+  command: rm /tmp/{{ dateTimeForFiles }}_homegear.tar.gz

@@ -1,0 +1,11 @@
+---
+- name: backup homepi
+  hosts: homepi
+  vars:
+    dateTimeForFiles: "{{ ansible_date_time.date }}-{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}-{{ ansible_date_time.second }}"
+    backupPath: "/mnt/d/backup"
+  become: true
+  tasks:
+    - include: tasks/backup_mosquitto.yml
+    - include: tasks/backup_homegear.yml
+    - include: tasks/backup_openhab.yml

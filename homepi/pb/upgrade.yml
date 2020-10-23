@@ -1,0 +1,26 @@
+---
+- name: update homepi
+  hosts: all
+  become: true
+  tasks:
+    - name: shutdown services
+      systemd:
+        state: stopped
+        name: "{{ item }}"
+      loop:
+        - openhab2
+        - homegear
+        - mosquitto
+    - name: Update Cache and upgrade
+      apt:
+          update_cache: yes
+          upgrade: dist
+      become: yes
+    - name: restart home services
+      systemd:
+        state: started
+        name: "{{ item }}"
+      loop:
+        - openhab2
+        - homegear
+        - mosquitto

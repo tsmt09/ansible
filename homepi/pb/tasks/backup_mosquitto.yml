@@ -1,0 +1,9 @@
+---
+- name: Archive mosquitto and copy to /tmp
+  command: tar -zcpf /tmp/{{ dateTimeForFiles }}_mosquitto.tar.gz /etc/mosquitto
+- name: Fetch backup file from remote
+  fetch:
+      src: /tmp/{{ dateTimeForFiles }}_mosquitto.tar.gz
+      dest: "{{ backupPath }}"
+- name: delete backup file from remote
+  command: rm /tmp/{{ dateTimeForFiles }}_mosquitto.tar.gz

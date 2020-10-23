@@ -1,0 +1,9 @@
+---
+- name: Archive openhab to /tmp
+  command: "/usr/share/openhab2/runtime/bin/backup /tmp/{{ dateTimeForFiles }}_openhab.zip"
+- name: Fetch backup file from remote
+  fetch:
+      src: /tmp/{{ dateTimeForFiles }}_openhab.zip
+      dest: "{{ backupPath }}"
+- name: delete backup file from remote
+  command: rm /tmp/{{ dateTimeForFiles }}_openhab.zip
