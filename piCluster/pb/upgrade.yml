@@ -1,10 +1,9 @@
 ---
-- name: update k8sboss
-  hosts: k8sboss
+- name: update cluster pis
+  hosts: all
   tasks:
     - name: Update Cache and upgrade
       apt:
           update_cache: yes
           upgrade: dist
       become: yes
-

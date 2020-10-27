@@ -1,0 +1,11 @@
+# send direct command, example shutdown -h
+ansible <pattern> -a -b "shutdown -h"
+
+# run shell command generic
+ansible <pattern> -m shell -a "<shellcommand>" https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html
+
+# ping servers for availability https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html
+ansible <pattern> -m ping
+
+# get server info https://docs.ansible.com/ansible/latest/collections/ansible/builtin/setup_module.html
+ansible <pattern> -m setup

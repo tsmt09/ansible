@@ -1,0 +1,10 @@
+---
+- name: creates a sudo user with random password
+  hosts: all
+  become: true
+  vars_files:
+    - ../newUserAndPassword.yml
+  tasks:
+    - name: shutdown
+      command: shutdown -h
+      
