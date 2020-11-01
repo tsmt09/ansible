@@ -1,0 +1,23 @@
+---
+- name: install nfs on boss
+  become: true
+  hosts: boss
+  vars:
+    - exportPath: "/media/clustyStorage"
+  tasks:
+    - name: install on host
+      include: tasks/installNfsServer.yml
+
+- name: install nfs on workers
+  hosts: workers
+  become: true
+  vars:
+    - importPath: "/media/clustyStorage"
+    - mountPath: "/media"
+    - mountName: "clustyStorage"
+    - localPath: "{{ mountPath }}/{{ mountName }}"
+  tasks:
+    - name: install on clients
+      include: tasks/installNfsClient.yml
+
+      

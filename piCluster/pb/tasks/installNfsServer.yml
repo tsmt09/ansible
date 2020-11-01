@@ -1,0 +1,27 @@
+---
+- name: check if path exists and is mounted
+  file:
+    path: "{{ exportPath }}"
+    state: directory
+    owner: root
+    group: root
+- name: install apt server
+  apt:
+    name: nfs-kernel-server
+    state: present
+- name: add to etc exports
+  lineinfile:
+    path: /etc/exports
+    state: present
+    regexp: '^{{ exportPath }}'
+    line: '{{ exportPath }} *(rw,sync,no_subtree_check)'
+- name: enable nfs server systemctl
+  systemd:
+    daemon-reload: yes
+    name: nfs-kernel-server
+    enabled: yes
+    state: started
+- name: add nfs-working file to export
+  file:
+    path: "{{ exportPath }}/nfs-working"
+    state: touch

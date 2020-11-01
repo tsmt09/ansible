@@ -1,0 +1,42 @@
+---
+- name: check if path exists otherwise create
+  file:
+    path: "{{ mountPath }}/{{ mountName }}"
+    state: directory
+    owner: root
+    group: root
+- name: install apt client
+  apt:
+    pkg:
+      - nfs-common
+      - autofs
+    state: present
+- name: check auto.nfs and create if not there
+  file:
+    path: /etc/auto.nfs
+    state: touch
+- name: check auto.master
+  file:
+    path: /etc/auto.master
+    state: file
+- name: line in auto.nfs
+  lineinfile:
+    path: /etc/auto.nfs
+    state: present
+    regexp: "^{{ mountName }}"
+    line: "{{ mountName }} -fstype=nfs,rw,retry=0 {{ hostvars['boss']['ansible_host'] }}:{{ importPath }}"
+- name: line in auto.master
+  lineinfile:
+    path: /etc/auto.master
+    state: present
+    regexp: "^{{ mountPath }}"
+    line: "{{ mountPath }} /etc/auto.nfs"
+- name: enable autofs
+  systemd:
+    enabled: yes
+    state: restarted
+    name: autofs
+- name: check if nfs is working
+  file:
+    path: "{{ importPath }}/nfs-working"
+    state: file

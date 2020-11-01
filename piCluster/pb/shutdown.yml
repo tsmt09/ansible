@@ -1,8 +1,6 @@
 ---
-- name: creates a sudo user with random password
+- name: shuts down all devices
   hosts: all
   become: true
   tasks:
     - name: shutdown
-      command: shutdown -h
-      
