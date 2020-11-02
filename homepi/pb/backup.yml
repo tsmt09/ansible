@@ -3,7 +3,7 @@
   hosts: homepi
   vars:
     dateTimeForFiles: "{{ ansible_date_time.date }}-{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}-{{ ansible_date_time.second }}"
-    backupPath: "/mnt/d/backup"
+    backupPath: "/mnt/d/backup/"
   become: true
   tasks:
     - include: tasks/backup_mosquitto.yml
