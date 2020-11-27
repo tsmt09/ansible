@@ -8,5 +8,5 @@
   with_items: 
     - dphys-swapfile swapoff
     - dphys-swapfile uninstall
-    - update-rc.d dphys-swapfile disable
+    - systemctl disable dphys-swapfile.service
   when: swap_enabled.stdout != "1"
