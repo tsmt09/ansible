@@ -1,0 +1,18 @@
+---
+- name: run influx backup mechanism
+  command: influxd backup -portable /tmp/backup
+- name: Archive influx backup
+  command: tar -zcpf /tmp/{{ dateTimeForFiles }}_influx.tar.gz /tmp/backup
+- name: Fetch backup file
+  fetch:
+      src: /tmp/{{ dateTimeForFiles }}_influx.tar.gz
+      dest: "{{ backupPath }}"
+      flat: yes
+- name: delete backup file
+  file: 
+    path: /tmp/{{ dateTimeForFiles }}_influx.tar.gz
+    state: absent
+- name: delete backup folder
+  file: 
+    path: rm -rf /tmp/backup
+    state: absent

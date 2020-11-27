@@ -1,0 +1,39 @@
+---
+- name: install aptitude with apt
+  apt:
+    name: aptitude
+    state: latest
+    update_cache: yes
+    force_apt_get: yes
+
+- name: check for required packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  loop:
+    - 'apt-transport-https'
+    - 'ca-certificates'
+    - 'curl'
+    - 'software-properties-common'
+    - 'python3-pip'
+    - 'virtualenv'
+    - 'python3-setuptools'
+
+- name: add docker gpg apt-key
+  apt_key:
+    url: https://download.docker.com/linux/raspbian/gpg
+    state: present
+
+- name: add docker repos
+  apt_repository:
+    repo: deb https://download.docker.com/linux/raspbian buster stable
+    state: present
+
+
+- name: Update apt and install docker-ce
+  apt:
+    name: docker-ce
+    update_cache: yes
+    state: latest
+

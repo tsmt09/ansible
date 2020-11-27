@@ -1,0 +1,10 @@
+---
+- name: prepare raspis for k8s
+  become: true
+  hosts: all
+  tasks:
+    - include: tasks/disableSwapfile.yml
+    #- include: tasks/allowBridgedTrafficInIpTables.yml
+    #- include: tasks/enableCgroups.yml
+    #- include: tasks/installDocker.yml
+    #- include: tasks/reboot.yml

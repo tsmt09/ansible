@@ -1,0 +1,12 @@
+---
+- name: Archive zigbee2mqtt backup
+  command: tar -zcpf /tmp/{{ dateTimeForFiles }}_zigbee2mqtt.tar.gz /home/ts/data
+- name: Fetch backup file
+  fetch:
+      src: /tmp/{{ dateTimeForFiles }}_zigbee2mqtt.tar.gz
+      dest: "{{ backupPath }}"
+      flat: yes
+- name: delete backup file
+  file: 
+    path: /tmp/{{ dateTimeForFiles }}_zigbee2mqtt.tar.gz
+    state: absent

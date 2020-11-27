@@ -1,0 +1,24 @@
+---
+- name: installs k8s
+  become: true
+  hosts: all
+  tasks:
+    - name: add k8s gpg apt-key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: add k8s repos
+      apt_repository:
+        repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+        state: present
+
+    - name: Update apt and install kubeadm
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+        state: latest
+      loop:
+        - kubelet
+        - kubeadm
+        - kubectl

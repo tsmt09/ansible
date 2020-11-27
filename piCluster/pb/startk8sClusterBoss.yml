@@ -1,0 +1,38 @@
+---
+- name: start cluster on boss
+  hosts: boss
+  vars:
+    kubeToken: "k3th4x.eg38pb3dvw2q56lo"
+  tasks:
+    - name: initialize the cluster
+      shell: sudo kubeadm init --token={{ kubeToken }} --pod-network-cidr=10.244.0.0/16
+      register: kubeadm
+    - name: check for admin.conf
+      stat:
+        path: /etc/kubernetes/admin.conf
+      register: adminconf 
+    - name: fail if adminconf not exist
+      fail:
+        msg: adminconf doesnt exist
+      when: adminconf.stat.exists == False
+    - name: create .kube folder
+      file:
+        path: ~/.kube
+        state: directory
+    - name: check for local conf
+      stat:
+        path: /home/{{ ansible_user_id }}/.kube/config
+      register: userconf 
+    - name: copy admin file if exist
+      become: yes
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: /home/{{ ansible_user_id }}/.kube/config
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+        remote_src: yes
+        mode: 0700
+      when: userconf.stat.exists == False
+    - name: apply CNI Flannel Stuff
+      shell:  "curl -sSL https://raw.githubusercontent.com/coreos/flannel/v0.12.0/Documentation/kube-flannel.yml | kubectl apply -f -"
+    - debug: var=kubeadm

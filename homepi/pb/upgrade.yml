@@ -8,7 +8,6 @@
         state: stopped
         name: "{{ item }}"
       loop:
-        - openhab2
         - homegear
         - mosquitto
     - name: Update Cache and upgrade
@@ -21,6 +20,5 @@
         state: started
         name: "{{ item }}"
       loop:
-        - openhab2
         - homegear
         - mosquitto

@@ -1,0 +1,9 @@
+---
+- name: connect workers
+  hosts: workers
+  vars:
+    kubeToken: "k3th4x.eg38pb3dvw2q56lo"
+    caHash: "40440c70449366d80b5067f20b389f0751bfc2e0fc8d86973fc6961f3add7ce8"
+  tasks:
+    - name: kubeadm join
+      shell:  "sudo kubeadm join {{ hostvars['clusty1']['ansible_host'] }}:6443 --token {{ kubeToken }} --discovery-token-ca-cert-hash sha256:{{ caHash }}"

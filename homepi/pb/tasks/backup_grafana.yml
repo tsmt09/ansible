@@ -1,0 +1,12 @@
+---
+- name: Archive grafana backup
+  command: tar -zcpf /tmp/{{ dateTimeForFiles }}_grafana.tar.gz /var/lib/grafana/grafana.db /etc/grafana/grafana.ini
+- name: Fetch backup file
+  fetch:
+      src: /tmp/{{ dateTimeForFiles }}_grafana.tar.gz
+      dest: "{{ backupPath }}"
+      flat: yes
+- name: delete backup file
+  file: 
+    path: /tmp/{{ dateTimeForFiles }}_grafana.tar.gz
+    state: absent
