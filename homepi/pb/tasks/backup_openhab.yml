@@ -1,10 +1,10 @@
 ---
 - name: Archive openhab to /tmp
-  command: 'docker exec -it root_openhab_1 "/bin/bash" -c "/openhab/runtime/bin/backup /openhab/userdata/backup/{{ dateTimeForFiles }}_openhab.zip"'
+  command: 'docker exec -it openhab "/bin/bash" -c "/openhab/runtime/bin/backup /openhab/userdata/backup/{{ dateTimeForFiles }}_openhab.zip"'
 - name: Fetch backup file from remote
   fetch:
-      src: /opt/openhab_docker/userdata/backup/{{ dateTimeForFiles }}_openhab.zip
+      src: /home/pi/docker/openhab/config/userdata/backup/{{ dateTimeForFiles }}_openhab.zip
       dest: "{{ backupPath }}"
       flat: yes
 - name: delete backup file from remote
-  command: rm /opt/openhab_docker/userdata/backup/{{ dateTimeForFiles }}_openhab.zip
+  command: rm /home/pi/docker/openhab/config/userdata/backup/{{ dateTimeForFiles }}_openhab.zip

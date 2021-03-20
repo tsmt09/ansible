@@ -1,6 +1,6 @@
 ---
 - name: Archive zigbee2mqtt backup
-  command: tar -zcpf /tmp/{{ dateTimeForFiles }}_zigbee2mqtt.tar.gz /home/ts/data
+  command: tar -zcpf /tmp/{{ dateTimeForFiles }}_zigbee2mqtt.tar.gz /opt/zigbee2mqtt/data
 - name: Fetch backup file
   fetch:
       src: /tmp/{{ dateTimeForFiles }}_zigbee2mqtt.tar.gz
