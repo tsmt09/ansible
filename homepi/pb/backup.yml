@@ -3,12 +3,19 @@
   hosts: homepi
   vars:
     dateTimeForFiles: "{{ ansible_date_time.date }}-{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}-{{ ansible_date_time.second }}"
-    backupPath: "~/backup/homepi"
   become: true
   tasks:
     - include: tasks/backup_mosquitto.yml
+      tags: mosquitto
     - include: tasks/backup_homegear.yml
+      tags: homegear
     - include: tasks/backup_openhab.yml
+      tags: openhab
     - include: tasks/backup_influx.yml
+      tags: influx
     - include: tasks/backup_grafana.yml
+      tags: grafana
     - include: tasks/backup_zigbee2mqtt.yml
+      tags: zig2mqtt
+    - include: tasks/backup_nodered.yml
+      tags: node-red
