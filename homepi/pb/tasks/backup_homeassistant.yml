@@ -1,0 +1,12 @@
+---
+- name: Archive zigbee2mqtt backup
+  command: tar -zcpf /tmp/{{ dateTimeForFiles }}_homeassistant.tar.gz /home/pi/docker/hassio
+- name: Fetch backup file
+  fetch:
+      src: /tmp/{{ dateTimeForFiles }}_homeassistant.tar.gz
+      dest: "{{ backupPath }}"
+      flat: yes
+- name: delete backup file
+  file: 
+    path: /tmp/{{ dateTimeForFiles }}_homeassistant.tar.gz
+    state: absent

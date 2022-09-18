@@ -9,8 +9,8 @@
       tags: mosquitto
     - include: tasks/backup_homegear.yml
       tags: homegear
-    - include: tasks/backup_openhab.yml
-      tags: openhab
+    - include: tasks/backup_homeassistant.yml
+      tags: homeassistant
     - include: tasks/backup_influx.yml
       tags: influx
     - include: tasks/backup_grafana.yml
